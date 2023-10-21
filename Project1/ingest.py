@@ -11,23 +11,17 @@ data_sources = odbc.dataSources()
 impala_data_source = [i for i, v in data_sources.items() if
                       re.search("Cloudera ODBC Driver for Impala", v) and not re.search('Sample Cloudera Impala DSN',
                                                                                         i)][0]
-# next((ds for ds, driver in data_sources.items() if re.search("Cloudera ODBC Driver for Impala", driver) and not re.search('Sample Cloudera Impala DSN', ds)), None)
-
-
-impala_data_source = [i for i, v in data_sources.items() if re.search("Cloudera ODBC Driver for Impala", v) and not re.search('Sample Cloudera Impala DSN',i)][0]
 
 if impala_data_source:
     print(f"this is your data source name: {impala_data_source}")
     try:
-        connection = odbc.connect("DSN="+impala_data_source, autocommit = True)        
+        connection = odbc.connect("DSN=" + impala_data_source, autocommit=True)
     except odbc.Error as e:
         connection = None
         print("ODBC Connection error", e)
 else:
     connection = None
     print("Cloudera data source not found in ODBC data sources")
-
-
 
 def select_excel_file(conn=connection):
     root = tk.Tk()
@@ -42,10 +36,28 @@ def select_excel_file(conn=connection):
     process_excel_file(file_path, conn)
     root.destroy()
 
+def select_excel_file_from_path(conn=connection):
+    root = tk.Tk()
+    root.withdraw()
+
+    folder_path = filedialog.askdirectory(title="Select the folder containing the Excel file")
+
+    if not folder_path:
+        print("No folder selected..")
+        return
+
+    file_path = filedialog.askopenfilename(initialdir=folder_path, title="Select the Excel file",
+                                           filetypes=[("Excel files", "*.xlsx")])
+
+    if not file_path:
+        print("No file selected..")
+        return
+
+    process_excel_file(file_path, conn)
+    root.destroy()
 
 def process_excel_file(file_path, conn=connection):
     excel_file_name = os.path.basename(file_path)
-
     tablename = os.path.splitext(excel_file_name)[0]
 
     excel_file = pd.read_excel(file_path)
@@ -83,6 +95,5 @@ def process_excel_file(file_path, conn=connection):
     conn.commit()
     conn.close()
 
-
 if __name__ == "__main__":
-    select_excel_file()
+    select_excel_file_from_path()
