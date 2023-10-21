@@ -97,3 +97,17 @@ def process_excel_file(file_path, conn=connection):
 
 if __name__ == "__main__":
     select_excel_file_from_path()
+
+
+
+
+# for value in data_tuple:
+#         # Replace NaN with "NA" for string columns and 0 for integer columns
+#         new_value = []
+#         for val in value:
+#             if isinstance(val, str):
+#                 new_value.append(val if val.strip() else "NA")
+#             elif isinstance(val, (int, float)) and pd.isna(val):
+#                 new_value.append(0)
+#             else:
+#                 new_value.append(val)
