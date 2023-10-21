@@ -12,17 +12,20 @@ impala_data_source = [i for i, v in data_sources.items() if
                       re.search("Cloudera ODBC Driver for Impala", v) and not re.search('Sample Cloudera Impala DSN',
                                                                                         i)][0]
 # next((ds for ds, driver in data_sources.items() if re.search("Cloudera ODBC Driver for Impala", driver) and not re.search('Sample Cloudera Impala DSN', ds)), None)
-impala_data_source
-if impala_data_source:
-    print(f"Data source for Cloudera Impala: {impala_data_source}")
-else:
-    print("Cloudera Impala data source not found in the ODBC data sources.")
+
+
+impala_data_source = [i for i, v in data_sources.items() if re.search("Cloudera ODBC Driver for Impala", v) and not re.search('Sample Cloudera Impala DSN',i)][0]
 
 if impala_data_source:
-    connection = odbc.connect("DSN=" + impala_data_source, autocommit=True)
+    print(f"this is your data source name: {impala_data_source}")
+    try:
+        connection = odbc.connect("DSN="+impala_data_source, autocommit = True)        
+    except odbc.Error as e:
+        connection = None
+        print("ODBC Connection error", e)
 else:
     connection = None
-    print("ODBC connection error happened..")
+    print("Cloudera data source not found in ODBC data sources")
 
 
 
