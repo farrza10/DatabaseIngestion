@@ -21,7 +21,7 @@ else:
 if impala_data_source:
     connection = odbc.connect("DSN=" + impala_data_source, autocommit=True)
 else:
-    connecta = None
+    connection = None
     print("ODBC connection error happened..")
 
 
