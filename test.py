@@ -111,3 +111,13 @@ if __name__ == "__main__":
 #                 new_value.append(0)
 #             else:
 #                 new_value.append(val)
+
+
+# replace_dict = {
+#         'int64': 0,        # Replace NaN with 0 for integer columns
+#         'float64': 0.0,    # Replace NaN with 0.0 for floating-point columns
+#         'object': ''       # Replace NaN with an empty string for string columns
+#     }
+
+# data_tuple = [tuple([excel_file_name] + [replace_dict.get(data_type, 'NA') if pd.isna(val) else val for val, data_type in zip(row, data_types)]) for _, row in excel_file.iterrows()]
+
