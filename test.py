@@ -115,6 +115,23 @@ if __name__ == "__main__":
 
 import numpy as np
 
+for col in data_.columns:
+    for i, val in enumerate(excel_file[col].values):
+      if pd.isna(val):
+        if excel_file[col].dtype == 'object':
+          excel_file[col] = excel_file[col].fillna("NoValue")  
+        elif isinstance(val, float):
+          excel_file[col] = excel_file[col].fillna(0)
+        elif isinstance(val, int):
+          excel_file[col] = excel_file[col].fillna(0)
+# excel_file
+
+data_tuple = [list(t) for t in excel_file.to_numpy()]
+data_tuple
+
+
+
+
 tuple2 = [(1.0, float('nan'), 1.0, float('nan')),
           (float('nan'), 2.0, 3, "abc")]
 
