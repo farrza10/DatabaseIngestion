@@ -132,26 +132,31 @@ data_tuple
 
 
 
-tuple2 = [(1.0, float('nan'), 1.0, float('nan')),
-          (float('nan'), 2.0, 3, "abc")]
+import numpy as np
+
+# Assuming you have imported pandas and have an Excel DataFrame called 'excel_file'
+
+# Convert the DataFrame to a list of tuples
+tuple2 = [tuple(i) for i in excel_file.to_numpy()]
 
 for i, tup in enumerate(tuple2):
     modified_tup = []
-    
+
     for value in tup:
-        if isinstance(value, str):
+        if value is None or (isinstance(value, str) and value.lower() == 'nan'):
             modified_value = "no value"
         elif isinstance(value, (int, float)):
             modified_value = 0
         else:
             modified_value = value  # Keep the original value for other data types
-        
+
         modified_tup.append(modified_value)
-    
+
     tuple2[i] = tuple(modified_tup)
 
-print("Updated tuple2 with values replaced:")
-print(tuple2)
+# Print the modified tuple2
+for t in tuple2:
+    print(t)
 
 
 
