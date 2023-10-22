@@ -113,22 +113,29 @@ if __name__ == "__main__":
 #                 new_value.append(val)
 
 
+import numpy as np
 
 tuple2 = [(1.0, float('nan'), 1.0, float('nan')),
-          (float('nan'), 2.0, 3)]
+          (float('nan'), 2.0, 3, "abc")]
 
 for i, tup in enumerate(tuple2):
-    nan_indices = [index for index, value in enumerate(tup) if np.isnan(value)]
-    print(f"Indices of nan values in tuple {i+1}: {nan_indices}")
+    modified_tup = []
     
-    # Replace nan values with zero
-    for index in nan_indices:
-        tup = tuple(tup[:index] + (0.0,) + tup[index + 1:])
+    for value in tup:
+        if isinstance(value, str):
+            modified_value = "no value"
+        elif isinstance(value, (int, float)):
+            modified_value = 0
+        else:
+            modified_value = value  # Keep the original value for other data types
+        
+        modified_tup.append(modified_value)
     
-    # Update the tuple in the list
-    tuple2[i] = tup
+    tuple2[i] = tuple(modified_tup)
 
+print("Updated tuple2 with values replaced:")
 print(tuple2)
+
 
 
 
