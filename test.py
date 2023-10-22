@@ -113,6 +113,23 @@ if __name__ == "__main__":
 #                 new_value.append(val)
 
 
+
+import numpy as np
+
+# Iterate through data_tuple and identify NaN values
+nan_indices = []  # To store the row and column indices of NaN values
+
+for row_idx, row in enumerate(data_tuple):
+    for col_idx, value in enumerate(row):
+        if pd.isna(value) or np.isnan(value):
+            nan_indices.append((row_idx, col_idx))
+
+# Print the row and column indices of NaN values
+for row_idx, col_idx in nan_indices:
+    print(f"NaN value found in data_tuple at row {row_idx}, column {col_idx}")
+
+
+
 # replace_dict = {
 #         'int64': 0,        # Replace NaN with 0 for integer columns
 #         'float64': 0.0,    # Replace NaN with 0.0 for floating-point columns
