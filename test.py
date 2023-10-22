@@ -114,15 +114,21 @@ if __name__ == "__main__":
 
 
 
-import numpy as np
-
 tuple2 = [(1.0, float('nan'), 1.0, float('nan')),
           (float('nan'), 2.0, 3)]
 
-# Iterate through the list of tuples
 for i, tup in enumerate(tuple2):
     nan_indices = [index for index, value in enumerate(tup) if np.isnan(value)]
     print(f"Indices of nan values in tuple {i+1}: {nan_indices}")
+    
+    # Replace nan values with zero
+    for index in nan_indices:
+        tup = tuple(tup[:index] + (0.0,) + tup[index + 1:])
+    
+    # Update the tuple in the list
+    tuple2[i] = tup
+
+print(tuple2)
 
 
 
